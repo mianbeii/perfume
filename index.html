@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>香水分装</title>
+<meta name="theme-color" content="#faf6f0">
+<style>
+:root{
+  --bg:#faf6f0; --paper:#fffdf9; --ink:#3a312d; --soft:#8a7d74; --line:#ebe2d6;
+  --rose:#b9776a; --gold:#b39461;
+  --serif:"Songti SC","STSong","Noto Serif SC","Source Han Serif SC",Georgia,serif;
+  --sans:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans)}
+body.lock{overflow:hidden}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+
+/* —— 头图 —— */
+.hero{position:relative;height:min(62vw,520px);min-height:300px;background:url(img/hero.jpg) 78% center/cover;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(250,246,240,.96) 0%,rgba(250,246,240,.75) 38%,rgba(250,246,240,0) 70%)}
+.hero-in{position:relative;z-index:1;height:100%;max-width:1120px;margin:0 auto;padding:0 28px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-size:11px;letter-spacing:.42em;color:var(--gold);margin-bottom:18px}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(46px,8vw,84px);margin:0;letter-spacing:.12em;line-height:1}
+.hero .sub{font-family:var(--serif);font-size:clamp(15px,2.2vw,20px);letter-spacing:.5em;margin:14px 0 22px;color:#5c4f48}
+.hero .tip{font-size:13px;color:var(--soft);max-width:300px;line-height:1.8;border-left:1px solid var(--gold);padding-left:12px}
+@media(max-width:640px){
+  .hero{height:auto;min-height:0;padding:48px 0 230px;background-position:82% center}
+  .hero::after{background:linear-gradient(180deg,rgba(250,246,240,.95) 0%,rgba(250,246,240,.8) 42%,rgba(250,246,240,0) 72%)}
+}
+
+/* —— 筛选 —— */
+.bar{position:sticky;top:0;z-index:20;background:rgba(250,246,240,.92);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1120px;margin:0 auto;padding:14px 20px 12px}
+.search{display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:9px 16px}
+.search input{flex:1;border:0;outline:0;background:none;font:inherit;font-size:14px;color:var(--ink)}
+.search svg{flex:none;opacity:.45}
+.fams{display:flex;gap:14px;overflow-x:auto;padding:14px 2px 4px;scrollbar-width:none}
+.fams::-webkit-scrollbar{display:none}
+.fam{flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:var(--soft);width:58px}
+.fam i{width:52px;height:52px;border-radius:50%;background:var(--paper) center/78% no-repeat;background-blend-mode:multiply;border:1px solid var(--line);transition:.2s}
+.fam i.all{display:grid;place-items:center;font-style:normal;font-family:var(--serif);font-size:15px;color:var(--ink)}
+.fam.on{color:var(--ink);font-weight:600}
+.fam.on i{border-color:var(--rose);box-shadow:0 0 0 3px rgba(185,119,106,.15)}
+.row{display:flex;gap:8px;align-items:center;overflow-x:auto;padding-top:10px;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.pill{flex:none;font-size:12.5px;padding:6px 13px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--soft);transition:.15s}
+.pill.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.sep{flex:none;width:1px;height:16px;background:var(--line);margin:0 4px}
+.sort{flex:none;margin-left:auto;font-size:12.5px;color:var(--soft);border:0;background:none;font-family:inherit;padding-right:2px}
+
+/* —— 列表 —— */
+main{max-width:1120px;margin:0 auto;padding:18px 20px 120px}
+.meta{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:var(--soft);margin:2px 2px 16px}
+.meta b{font-family:var(--serif);font-size:20px;color:var(--ink);font-weight:500;margin:0 3px}
+.meta button{color:var(--rose);font-size:12.5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.card{min-width:0}
+@media(max-width:640px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;text-align:left;transition:transform .25s,box-shadow .25s;animation:up .4s both}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(90,60,40,.35)}
+@keyframes up{from{opacity:0;transform:translateY(8px)}}
+.pic{position:relative;aspect-ratio:5/4;display:grid;place-items:center}
+.pic img{width:62%;mix-blend-mode:multiply}
+.pic .no{position:absolute;left:12px;top:10px;font-size:10px;letter-spacing:.12em;color:rgba(58,49,45,.45)}
+.pic .g{position:absolute;right:10px;top:9px;font-size:10.5px;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.7);color:var(--soft)}
+.info{padding:12px 14px 14px;display:flex;flex-direction:column;flex:1}
+.brand{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.name{font-family:var(--serif);font-size:17px;margin:4px 0 2px;line-height:1.35}
+.en{font-family:Georgia,serif;font-style:italic;font-size:12px;color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.say{font-size:12.5px;color:#6d625b;line-height:1.65;margin:10px 0 12px;flex:1}
+.foot{display:flex;align-items:center;justify-content:space-between}
+.price{font-family:var(--serif);font-size:18px}
+.price small{font-family:var(--sans);font-size:11px;color:var(--soft);margin-left:2px}
+.add{width:32px;height:32px;border-radius:50%;border:1px solid var(--ink);display:grid;place-items:center;font-size:18px;line-height:1;transition:.15s}
+.add:active{transform:scale(.9)}
+.add.in{background:var(--ink);color:#fff}
+@media(max-width:640px){.info{padding:10px 11px 12px}.name{font-size:15px}.say{font-size:12px;margin:8px 0 10px}.price{font-size:16px}}
+.empty{text-align:center;color:var(--soft);padding:60px 0;font-family:var(--serif)}
+
+/* —— 弹层 —— */
+.mask{position:fixed;inset:0;background:rgba(40,30,25,.38);z-index:40;opacity:0;pointer-events:none;transition:opacity .25s}
+.mask.show{opacity:1;pointer-events:auto}
+.sheet{position:fixed;z-index:50;left:50%;bottom:0;width:min(560px,100%);max-height:88vh;overflow:auto;background:var(--paper);border-radius:24px 24px 0 0;transform:translate(-50%,105%);transition:transform .35s cubic-bezier(.2,.8,.2,1);padding:0 0 calc(22px + env(safe-area-inset-bottom))}
+.sheet.show{transform:translate(-50%,0)}
+@media(min-width:700px){.sheet{bottom:50%;border-radius:24px;transform:translate(-50%,60%);opacity:0;transition:.3s}.sheet.show{transform:translate(-50%,50%);opacity:1}}
+.grab{width:38px;height:4px;border-radius:4px;background:var(--line);margin:10px auto 0}
+.x{position:absolute;right:14px;top:12px;width:32px;height:32px;border-radius:50%;font-size:20px;color:var(--soft)}
+.d-top{display:flex;gap:16px;align-items:center;padding:18px 24px 6px}
+.d-top .pic{width:96px;flex:none;border-radius:16px;aspect-ratio:1}
+.d-top .pic img{width:80%}
+.d-top .name{font-size:22px}
+.quote{font-family:var(--serif);font-size:15px;color:#5c4f48;margin:14px 24px 4px;padding:12px 16px;background:var(--bg);border-radius:12px;line-height:1.7}
+.quote::before{content:"「"}.quote::after{content:"」"}
+.notes{margin:16px 24px 0}
+.note{display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:start;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px;line-height:1.6}
+.note:last-child{border:0}
+.note span{font-size:12px;color:var(--gold);letter-spacing:.1em;padding-top:2px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:12px 24px 0}
+.tag{font-size:11.5px;padding:3px 10px;border-radius:999px;background:var(--bg);color:var(--soft)}
+.h{font-size:12px;letter-spacing:.2em;color:var(--soft);margin:22px 24px 10px}
+.sizes{display:flex;gap:10px;margin:0 24px}
+.size{flex:1;border:1px solid var(--line);border-radius:14px;padding:10px 0;text-align:center;transition:.15s}
+.size b{display:block;font-family:var(--serif);font-weight:500;font-size:17px}
+.size em{font-style:normal;font-size:12px;color:var(--soft)}
+.size.on{border-color:var(--ink);background:var(--ink);color:#fff}
+.size.on em{color:rgba(255,255,255,.7)}
+.acts{display:flex;gap:10px;margin:22px 24px 0}
+.btn{flex:1;height:48px;border-radius:999px;font-size:15px;letter-spacing:.06em}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.line{border:1px solid var(--ink)}
+
+/* —— 小样盒 —— */
+.bag{position:fixed;z-index:30;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translate(-50%,140%);transition:transform .35s cubic-bezier(.2,.8,.2,1);display:flex;align-items:center;gap:12px;background:var(--ink);color:#fff;border-radius:999px;padding:8px 8px 8px 20px;box-shadow:0 14px 30px -12px rgba(40,30,25,.5);white-space:nowrap}
+.bag.show{transform:translate(-50%,0)}
+.bag .n{font-family:var(--serif);font-size:15px}
+.bag .n small{opacity:.65;font-size:12px;margin-left:6px;font-family:var(--sans)}
+.bag button{background:#fff;color:var(--ink);border-radius:999px;padding:9px 16px;font-size:13.5px}
+.bag-list{margin:6px 24px 0}
+.bi{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.bi .pic{width:46px;flex:none;border-radius:12px;aspect-ratio:1}
+.bi .pic img{width:80%}
+.bi .t{flex:1;min-width:0}
+.bi .t b{font-family:var(--serif);font-weight:500;font-size:15px}
+.bi .t div{font-size:12px;color:var(--soft);margin-top:2px}
+.bi .p{font-family:var(--serif);font-size:16px}
+.bi .rm{color:var(--soft);font-size:18px;width:28px}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin:16px 24px 0;font-size:13px;color:var(--soft)}
+.total b{font-family:var(--serif);font-size:24px;color:var(--ink);font-weight:500}
+.hint{font-size:12px;color:var(--soft);text-align:center;margin:12px 24px 0;line-height:1.7}
+
+.toast{position:fixed;z-index:60;left:50%;top:40%;transform:translate(-50%,-50%) scale(.9);background:rgba(40,30,25,.88);color:#fff;font-size:14px;padding:14px 20px;border-radius:14px;opacity:0;pointer-events:none;transition:.25s;text-align:center;line-height:1.7;max-width:80vw}
+.toast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+footer{text-align:center;font-size:11.5px;color:var(--soft);letter-spacing:.1em;padding:0 20px 40px;line-height:2}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="hero-in">
+  <div class="eyebrow">PERFUME · DECANTS</div>
+  <h1 id="shopName"></h1>
+  <div class="sub" id="shopSub"></div>
+  <div class="tip" id="shopTip"></div>
+</div></header>
+
+<div class="bar"><div class="bar-in">
+  <label class="search">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="搜品牌、香名、或一种味道，比如「玫瑰」">
+  </label>
+  <div class="fams" id="fams"></div>
+  <div class="row" id="row"></div>
+</div></div>
+
+<main>
+  <div class="meta"><span>共<b id="count">0</b>款</span><button id="reset" hidden>清除筛选</button></div>
+  <div class="grid" id="grid"></div>
+</main>
+<footer>分装为原瓶手工分出 · 小样仅供试香<br>价格以闲鱼为准</footer>
+
+<div class="bag" id="bag"><span class="n" id="bagN"></span><button id="bagOpen">看看小样盒</button></div>
+<div class="mask" id="mask"></div>
+<div class="sheet" id="sheet"></div>
+<div class="toast" id="toast"></div>
+
+<script src="data.js"></script>
+<script>
+const FAM = {
+  floral: { label: '花香', tint: '#f6e7e3' }, citrus: { label: '柑橘', tint: '#f8efd9' },
+  woody: { label: '木质', tint: '#ede4d8' }, sweet: { label: '甜香', tint: '#f4ebdf' },
+  fresh: { label: '清新', tint: '#e3edf0' }, amber: { label: '琥珀', tint: '#f4e2d0' },
+};
+const $ = s => document.querySelector(s);
+const st = { fam: '', gender: '', season: '', sort: '', q: '' };
+let bag = JSON.parse(localStorage.getItem('decant-bag') || '[]');
+const byId = id => PERFUMES.find(p => p.id === id);
+const minPrice = p => Math.min(...p.sizes.map(s => s.price));
+const pic = p => `<div class="pic" style="background:${FAM[p.family].tint}"><img src="img/${p.family}.jpg" alt="" loading="lazy"></div>`;
+
+$('#shopName').textContent = SHOP.name;
+$('#shopSub').textContent = SHOP.sub;
+$('#shopTip').textContent = SHOP.tip;
+document.title = SHOP.name + SHOP.sub;
+
+// 香调
+$('#fams').innerHTML = `<button class="fam on" data-f=""><i class="all">全部</i>全部</button>` +
+  Object.entries(FAM).map(([k, v]) => `<button class="fam" data-f="${k}"><i style="background-image:url(img/${k}.jpg);background-color:${v.tint}"></i>${v.label}</button>`).join('');
+$('#fams').onclick = e => { const b = e.target.closest('.fam'); if (!b) return; st.fam = b.dataset.f; render(); };
+
+// 性别、季节、排序
+const G = ['女', '男', '中性'], S = ['春', '夏', '秋', '冬'];
+$('#row').innerHTML =
+  G.map(g => `<button class="pill" data-k="gender" data-v="${g}">${g === '中性' ? '中性' : g + '香'}</button>`).join('') +
+  `<span class="sep"></span>` +
+  S.map(s => `<button class="pill" data-k="season" data-v="${s}">${s}</button>`).join('') +
+  `<select class="sort" id="sort"><option value="">默认排序</option><option value="up">价格从低到高</option><option value="down">价格从高到低</option></select>`;
+$('#row').onclick = e => { const b = e.target.closest('.pill'); if (!b) return; const k = b.dataset.k; st[k] = st[k] === b.dataset.v ? '' : b.dataset.v; render(); };
+$('#sort').onchange = e => { st.sort = e.target.value; render(); };
+$('#q').oninput = e => { st.q = e.target.value.trim().toLowerCase(); render(); };
+$('#reset').onclick = () => { Object.assign(st, { fam: '', gender: '', season: '', q: '' }); $('#q').value = ''; render(); };
+
+function list() {
+  let r = PERFUMES.filter(p =>
+    (!st.fam || p.family === st.fam) &&
+    (!st.gender || p.gender === st.gender) &&
+    (!st.season || p.season.includes(st.season)) &&
+    (!st.q || [p.brand, p.name, p.en, p.say, p.top, p.heart, p.base, FAM[p.family].label].join(' ').toLowerCase().includes(st.q)));
+  if (st.sort) r = [...r].sort((a, b) => (minPrice(a) - minPrice(b)) * (st.sort === 'up' ? 1 : -1));
+  return r;
+}
+
+function render() {
+  document.querySelectorAll('.fam').forEach(b => b.classList.toggle('on', b.dataset.f === st.fam));
+  document.querySelectorAll('.pill').forEach(b => b.classList.toggle('on', st[b.dataset.k] === b.dataset.v));
+  const r = list();
+  $('#count').textContent = r.length;
+  $('#reset').hidden = !(st.fam || st.gender || st.season || st.q);
+  $('#grid').innerHTML = r.length ? r.map((p, i) => `
+    <article class="card" data-id="${p.id}" style="animation-delay:${Math.min(i, 12) * 30}ms">
+      <div class="pic" style="background:${FAM[p.family].tint}"><img src="img/${p.family}.jpg" alt="" loading="lazy"><span class="no">${p.id}</span><span class="g">${FAM[p.family].label}</span></div>
+      <div class="info">
+        <div class="brand">${p.brand}</div>
+        <div class="name">${p.name}</div>
+        <div class="en">${p.en}</div>
+        <div class="say">${p.say}</div>
+        <div class="foot"><span class="price">¥${minPrice(p)}<small>起</small></span>
+          <button class="add ${bag.some(x => x.id === p.id) ? 'in' : ''}" data-add="${p.id}" aria-label="加入小样盒">${bag.some(x => x.id === p.id) ? '✓' : '+'}</button></div>
+      </div>
+    </article>`).join('') : `<div class="empty" style="grid-column:1/-1">没有找到合适的，换个条件试试</div>`;
+  renderBag();
+}
+
+$('#grid').onclick = e => {
+  const a = e.target.closest('[data-add]');
+  if (a) { e.stopPropagation(); openDetail(a.dataset.add); return; }
+  const c = e.target.closest('.card'); if (c) openDetail(c.dataset.id);
+};
+
+// 详情
+let cur = null, curSize = 0;
+function openDetail(id) {
+  cur = byId(id); curSize = Math.min(1, cur.sizes.length - 1);
+  const p = cur;
+  $('#sheet').innerHTML = `
+    <div class="grab"></div><button class="x" data-close>×</button>
+    <div class="d-top">${pic(p)}<div><div class="brand">${p.brand} · ${p.id}</div><div class="name">${p.name}</div><div class="en">${p.en}</div></div></div>
+    <div class="quote">${p.say}</div>
+    <div class="tags"><span class="tag">${FAM[p.family].label}</span><span class="tag">${p.gender === '中性' ? '中性' : p.gender + '香'}</span>${p.season.map(s => `<span class="tag">${s}</span>`).join('')}</div>
+    <div class="notes">
+      <div class="note"><span>前调</span><div>${p.top}</div></div>
+      <div class="note"><span>中调</span><div>${p.heart}</div></div>
+      <div class="note"><span>后调</span><div>${p.base}</div></div>
+    </div>
+    <div class="h">选择分装规格</div>
+    <div class="sizes">${p.sizes.map((s, i) => `<button class="size ${i === curSize ? 'on' : ''}" data-size="${i}"><b>${s.ml}ml</b><em>¥${s.price}</em></button>`).join('')}</div>
+    <div class="acts"><button class="btn line" data-copy1>复制这一款</button><button class="btn dark" data-put>加入小样盒</button></div>`;
+  open();
+}
+
+// 小样盒
+function saveBag() { localStorage.setItem('decant-bag', JSON.stringify(bag)); }
+function bagTotal() { return bag.reduce((t, x) => t + byId(x.id).sizes[x.s].price, 0); }
+function line(x, i) { const p = byId(x.id), s = p.sizes[x.s]; return `${i + 1}. ${p.id} ${p.brand} ${p.name} · ${s.ml}ml ¥${s.price}`; }
+function renderBag() {
+  bag = bag.filter(x => byId(x.id));
+  $('#bag').classList.toggle('show', bag.length > 0);
+  $('#bagN').innerHTML = `小样盒 ${bag.length} 件<small>¥${bagTotal()}</small>`;
+}
+function openBag() {
+  if (!bag.length) { close(); return; }
+  $('#sheet').innerHTML = `
+    <div class="grab"></div><button class="x" data-close>×</button>
+    <div class="d-top"><div><div class="brand">MY SAMPLE BOX</div><div class="name">我的小样盒</div></div></div>
+    <div class="bag-list">${bag.map((x, i) => { const p = byId(x.id), s = p.sizes[x.s]; return `
+      <div class="bi">${pic(p)}<div class="t"><b>${p.name}</b><div>${p.brand} · ${p.id} · ${s.ml}ml</div></div><span class="p">¥${s.price}</span><button class="rm" data-rm="${i}">×</button></div>`; }).join('')}</div>
+    <div class="total"><span>共 ${bag.length} 件</span><span>合计 <b>¥${bagTotal()}</b></span></div>
+    <div class="acts"><button class="btn dark" data-copyall>复制清单</button></div>
+    <div class="hint">复制后回到闲鱼，粘贴发给我<br>我按清单改好价格，你再拍下就好</div>`;
+  open();
+}
+$('#bagOpen').onclick = openBag;
+
+$('#sheet').onclick = e => {
+  const t = e.target.closest('button'); if (!t) return;
+  if (t.hasAttribute('data-close')) close();
+  else if (t.dataset.size) { curSize = +t.dataset.size; document.querySelectorAll('.size').forEach((b, i) => b.classList.toggle('on', i === curSize)); }
+  else if (t.hasAttribute('data-put')) {
+    const k = bag.findIndex(x => x.id === cur.id && x.s === curSize);
+    if (k < 0) bag.push({ id: cur.id, s: curSize });
+    saveBag(); render(); close(); toast(k < 0 ? '已放进小样盒' : '小样盒里已经有这一支啦');
+  }
+  else if (t.hasAttribute('data-copy1')) { const s = cur.sizes[curSize]; copy(`你好～我想要：${cur.id} ${cur.brand} ${cur.name} · ${s.ml}ml ¥${s.price}`); }
+  else if (t.dataset.rm) { bag.splice(+t.dataset.rm, 1); saveBag(); render(); openBag(); }
+  else if (t.hasAttribute('data-copyall')) copy(`你好～我想要这些：\n${bag.map(line).join('\n')}\n合计 ¥${bagTotal()}`);
+};
+
+function open() { $('#mask').classList.add('show'); $('#sheet').classList.add('show'); document.body.classList.add('lock'); }
+function close() { $('#mask').classList.remove('show'); $('#sheet').classList.remove('show'); document.body.classList.remove('lock'); }
+$('#mask').onclick = close;
+document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+function copy(text) {
+  const ok = () => toast('已复制 ✓<br>回闲鱼粘贴发给我就好');
+  const fallback = () => { const ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (_) { toast('复制没成功，长按手动复制吧'); } ta.remove(); };
+  navigator.clipboard ? navigator.clipboard.writeText(text).then(ok, fallback) : fallback();
+}
+let tt;
+function toast(h) { const el = $('#toast'); el.innerHTML = h; el.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => el.classList.remove('show'), 1800); }
+
+render();
+</script>
+</body>
+</html>

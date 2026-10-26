@@ -53,4 +53,7 @@ const PERFUMES = [
   { id: 'P012', pic: 'p/P012.jpg', brand: 'Armani Privé 阿玛尼', name: '苏州牡丹 · 流沙版', en: 'Pivoine Suzhou · Soie de Nacre', family: 'floral', gender: '女', season: ['春', '夏'],
     say: '园林里盛开的粉牡丹，瓶里的珠光像流沙一样慢慢转', top: '粉红胡椒、柑橘', heart: '牡丹、玫瑰、铃兰', base: '白麝香、木质调',
     sizes: [{ ml: 1, price: 10 }, { ml: 10, price: 85, free: true }] },
+  { id: 'P013', pic: 'p/P013.jpg', brand: 'Marc Jacobs 马克雅克布', name: '小雏菊', en: 'Daisy · EDT', family: 'floral', gender: '女', season: ['春', '夏'],
+    say: '草莓和紫罗兰叶，春天野地里的一小把雏菊，甜甜的、很少女', top: '草莓、紫罗兰叶、红葡萄柚', heart: '栀子花、紫罗兰、茉莉', base: '麝香、香草、白木',
+    sizes: [{ ml: 1, price: 6 }, { ml: 5, price: 28 }, { ml: 10, price: 46, free: true }] },
 ];

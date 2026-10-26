@@ -44,4 +44,7 @@ const PERFUMES = [
     pick: { max: 5, total: 10, min: 2, options: ['暴风雨', '初生婴儿', '平装书', '现磨咖啡', '忍冬', '竹子', '金汤力', '婴儿爽身粉', '纯牛奶', '凤梨椰奶酒',
       '桃子', '姜汁汽水', '纯净肌肤', '山间空气', '咸空气', '西瓜棒棒糖', '洗衣间', '青草', '巧克力曲奇', '黑巧克力'] },
     sizes: [{ ml: 2, price: 10 }, { ml: 10, price: 39, free: true, mix: true }] },
+  { id: 'P010', pic: 'p/P010.jpg', brand: 'Montblanc 万宝龙', name: '纯白印记 · 墨水瓶', en: 'Signature · EDP', family: 'floral', gender: '女', season: ['春', '秋', '冬'],
+    say: '干净的白麝香裹着木兰和桂花，像刚洗过的白衬衫，温柔不张扬', top: '橘子', heart: '木兰、桂花、牡丹', base: '白麝香、香草、安息香',
+    sizes: [{ ml: 1, price: 7 }, { ml: 10, price: 59, free: true }] },
 ];

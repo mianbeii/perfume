@@ -56,4 +56,7 @@ const PERFUMES = [
   { id: 'P013', pic: 'p/P013.jpg', brand: 'Marc Jacobs 马克雅克布', name: '小雏菊', en: 'Daisy · EDT', family: 'floral', gender: '女', season: ['春', '夏'],
     say: '草莓和紫罗兰叶，春天野地里的一小把雏菊，甜甜的、很少女', top: '草莓、紫罗兰叶、红葡萄柚', heart: '栀子花、紫罗兰、茉莉', base: '麝香、香草、白木',
     sizes: [{ ml: 1, price: 6 }, { ml: 5, price: 28 }, { ml: 10, price: 46, free: true }] },
+  { id: 'P014', pic: 'p/P014.jpg', brand: 'Tom Ford 汤姆福特', name: '咖啡玫瑰 · 紫标', en: 'Café Rose · EDP', family: 'floral', gender: '中性', season: ['秋', '冬'],
+    say: '深夜咖啡馆桌上的一枝暗红玫瑰，咖啡的苦混着焚香，浓郁又克制', top: '藏红花、咖啡、黑胡椒', heart: '土耳其玫瑰、五月玫瑰、保加利亚玫瑰', base: '广藿香、焚香、檀香木、琥珀',
+    sizes: [{ ml: 1, price: 20 }, { ml: 5, price: 99, free: true }] },
 ];

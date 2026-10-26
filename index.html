@@ -179,6 +179,12 @@ footer .orn{width:150px;margin-bottom:10px;opacity:.85}
 .bi .rm{color:var(--soft);font-size:18px;width:28px}
 .total{display:flex;justify-content:space-between;align-items:baseline;margin:16px 24px 0;font-size:13px;color:var(--soft)}
 .total b{font-family:var(--serif);font-size:24px;color:var(--ink);font-weight:500}
+.picks{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:0 24px}
+.pk{border:1px solid var(--line);border-radius:999px;padding:7px 0;font-size:13px;text-align:center;background:rgba(255,255,255,.35);transition:.15s}
+.pk.on{border-color:var(--bg2);background:var(--bg2);color:var(--cream)}
+.pk:disabled{opacity:.35}
+.h b{color:var(--bg2);font-weight:500;margin-left:6px}
+@media(max-width:400px){.picks{grid-template-columns:repeat(3,1fr)}}
 .hint{font-size:12px;color:var(--soft);text-align:center;margin:12px 24px 0;line-height:1.7}
 
 .toast{position:fixed;z-index:60;left:50%;top:40%;transform:translate(-50%,-50%) scale(.9);background:rgba(45,6,12,.94);color:var(--on-bg);box-shadow:0 0 0 1px var(--gold2);font-size:14px;padding:14px 20px;border-radius:14px;opacity:0;pointer-events:none;transition:.25s;text-align:center;line-height:1.7;max-width:80vw}
@@ -239,6 +245,7 @@ let bag = JSON.parse(localStorage.getItem('decant-bag') || '[]');
 const byId = id => PERFUMES.find(p => p.id === id);
 const minPrice = p => Math.min(...p.sizes.map(s => s.price));
 const free = s => s.free ? ' 包邮' : '';
+const picked = x => x.pick && x.pick.length ? `（${x.pick.join('、')}）` : '';
 const pic = p => `<div class="pic"><img src="img/${p.pic || SKIN + '/b-' + p.family + '.jpg'}" alt=""></div>`;
 const corners = ['t', 'b'].map(c => `<img class="fl ${c}" src="img/${SKIN}/fleuron.png" alt="">`).join('');
 
@@ -272,7 +279,7 @@ function list() {
     (!st.fam || p.family === st.fam) &&
     (!st.gender || p.gender === st.gender) &&
     (!st.season || p.season.includes(st.season)) &&
-    (!st.q || [p.brand, p.name, p.en, p.say, p.top, p.heart, p.base, FAM[p.family].label].join(' ').toLowerCase().includes(st.q)));
+    (!st.q || [p.brand, p.name, p.en, p.say, p.top, p.heart, p.base, FAM[p.family].label, ...(p.pick ? p.pick.options : [])].join(' ').toLowerCase().includes(st.q)));
   if (st.sort) r = [...r].sort((a, b) => (minPrice(a) - minPrice(b)) * (st.sort === 'up' ? 1 : -1));
   return r;
 }
@@ -293,7 +300,7 @@ function render() {
         <div class="en">${p.en}</div>
         <img class="div" src="img/${SKIN}/divider.png" alt="">
         <div class="say">${p.say}</div>
-        <div class="tagline">${FAM[p.family].label} · ${p.gender === '中性' ? '中性' : p.gender + '香'} · ${p.season.join('')}</div>
+        <div class="tagline">${p.pick ? `${p.pick.options.length} 种味道 · 任选 ${p.pick.max} 种以内` : `${FAM[p.family].label} · ${p.gender === '中性' ? '中性' : p.gender + '香'} · ${p.season.join('')}`}</div>
       </div>
       <div class="sizes-mini">${p.sizes.map(s => `<span>${s.ml}ml<b>¥${s.price}${s.free ? '<em>包邮</em>' : ''}</b></span>`).join('')}</div>
     </article>`).join('') : `<div class="empty" style="grid-column:1/-1">没有找到合适的，换个条件试试</div>`;
@@ -303,20 +310,22 @@ function render() {
 $('#grid').onclick = e => { const c = e.target.closest('.card'); if (c) openDetail(c.dataset.id); };
 
 // 详情
-let cur = null, curSize = 0;
+let cur = null, curSize = 0, curPick = [];
 function openDetail(id) {
-  cur = byId(id); curSize = Math.min(1, cur.sizes.length - 1);
+  cur = byId(id); curSize = Math.min(1, cur.sizes.length - 1); curPick = [];
   const p = cur;
   $('#sheet').innerHTML = `
     <div class="grab"></div><button class="x" data-close>×</button>
     <div class="d-top">${pic(p)}<div><div class="brand">${p.brand} · ${p.id}</div><div class="name">${p.name}</div><div class="en">${p.en}</div></div></div>
     <div class="quote">${p.say}</div>
     <div class="tags"><span class="tag">${FAM[p.family].label}</span><span class="tag">${p.gender === '中性' ? '中性' : p.gender + '香'}</span>${p.season.map(s => `<span class="tag">${s}</span>`).join('')}</div>
+    ${p.pick ? `<div class="h">挑你想要的味道 · 最多 ${p.pick.max} 种<b id="pickN">已选 0</b></div>
+    <div class="picks">${p.pick.options.map(o => `<button class="pk" data-pk="${o}">${o}</button>`).join('')}</div>` : `
     <div class="notes">
       <div class="note"><span>前调</span><div>${p.top}</div></div>
       <div class="note"><span>中调</span><div>${p.heart}</div></div>
       <div class="note"><span>后调</span><div>${p.base}</div></div>
-    </div>
+    </div>`}
     <div class="h">选择分装规格</div>
     <div class="sizes">${p.sizes.map((s, i) => `<button class="size ${i === curSize ? 'on' : ''}" data-size="${i}"><b>${s.ml}ml</b><em>¥${s.price}${free(s)}</em></button>`).join('')}</div>
     <div class="acts"><button class="btn line" data-copy1>复制这一款</button><button class="btn dark" data-put>加入小样盒</button></div>`;
@@ -326,7 +335,7 @@ function openDetail(id) {
 // 小样盒
 function saveBag() { localStorage.setItem('decant-bag', JSON.stringify(bag)); }
 function bagTotal() { return bag.reduce((t, x) => t + byId(x.id).sizes[x.s].price, 0); }
-function line(x, i) { const p = byId(x.id), s = p.sizes[x.s]; return `${i + 1}. ${p.id} ${p.brand} ${p.name} · ${s.ml}ml ¥${s.price}${free(s)}`; }
+function line(x, i) { const p = byId(x.id), s = p.sizes[x.s]; return `${i + 1}. ${p.id} ${p.brand} ${p.name}${picked(x)} · ${s.ml}ml ¥${s.price}${free(s)}`; }
 function renderBag() {
   bag = bag.filter(x => byId(x.id) && byId(x.id).sizes[x.s]);
   $('#bag').classList.toggle('show', bag.length > 0);
@@ -338,7 +347,7 @@ function openBag() {
     <div class="grab"></div><button class="x" data-close>×</button>
     <div class="d-top"><div><div class="brand">MY SAMPLE BOX</div><div class="name">我的小样盒</div></div></div>
     <div class="bag-list">${bag.map((x, i) => { const p = byId(x.id), s = p.sizes[x.s]; return `
-      <div class="bi">${pic(p)}<div class="t"><b>${p.name}</b><div>${p.brand} · ${p.id} · ${s.ml}ml${free(s)}</div></div><span class="p">¥${s.price}</span><button class="rm" data-rm="${i}">×</button></div>`; }).join('')}</div>
+      <div class="bi">${pic(p)}<div class="t"><b>${p.name}</b><div>${p.brand} · ${p.id} · ${s.ml}ml${free(s)}</div>${x.pick ? `<div>${x.pick.join('、')}</div>` : ''}</div><span class="p">¥${s.price}</span><button class="rm" data-rm="${i}">×</button></div>`; }).join('')}</div>
     <div class="total"><span>共 ${bag.length} 件</span><span>合计 <b>¥${bagTotal()}</b></span></div>
     <div class="acts"><button class="btn dark" data-copyall>复制清单</button></div>
     <div class="hint">复制后回到闲鱼，粘贴发给我<br>我按清单改好价格，你再拍下就好</div>`;
@@ -350,12 +359,23 @@ $('#sheet').onclick = e => {
   const t = e.target.closest('button'); if (!t) return;
   if (t.hasAttribute('data-close')) close();
   else if (t.dataset.size) { curSize = +t.dataset.size; document.querySelectorAll('.size').forEach((b, i) => b.classList.toggle('on', i === curSize)); }
+  else if (t.dataset.pk) {
+    const o = t.dataset.pk, k = curPick.indexOf(o);
+    k < 0 ? curPick.push(o) : curPick.splice(k, 1);
+    const full = curPick.length >= cur.pick.max;
+    document.querySelectorAll('.pk').forEach(b => { const on = curPick.includes(b.dataset.pk); b.classList.toggle('on', on); b.disabled = full && !on; });
+    $('#pickN').textContent = `已选 ${curPick.length}`;
+  }
   else if (t.hasAttribute('data-put')) {
-    const k = bag.findIndex(x => x.id === cur.id && x.s === curSize);
-    if (k < 0) bag.push({ id: cur.id, s: curSize });
+    if (cur.pick && !curPick.length) { toast('先挑几种味道吧'); return; }
+    const pk = cur.pick ? [...curPick] : undefined, same = x => x.id === cur.id && x.s === curSize && (x.pick || []).join() === (pk || []).join();
+    const k = bag.findIndex(same);
+    if (k < 0) bag.push({ id: cur.id, s: curSize, pick: pk });
     saveBag(); render(); close(); toast(k < 0 ? '已放进小样盒' : '小样盒里已经有这一支啦');
   }
-  else if (t.hasAttribute('data-copy1')) { const s = cur.sizes[curSize]; copy(`你好～我想要：${cur.id} ${cur.brand} ${cur.name} · ${s.ml}ml ¥${s.price}${free(s)}`); }
+  else if (t.hasAttribute('data-copy1')) {
+    if (cur.pick && !curPick.length) { toast('先挑几种味道吧'); return; }
+    const s = cur.sizes[curSize]; copy(`你好～我想要：${cur.id} ${cur.brand} ${cur.name}${picked({ pick: curPick })} · ${s.ml}ml ¥${s.price}${free(s)}`); }
   else if (t.dataset.rm) { bag.splice(+t.dataset.rm, 1); saveBag(); render(); openBag(); }
   else if (t.hasAttribute('data-copyall')) copy(`你好～我想要这些：\n${bag.map(line).join('\n')}\n合计 ¥${bagTotal()}`);
 };

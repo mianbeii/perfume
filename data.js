@@ -39,7 +39,7 @@ const PERFUMES = [
     sizes: [{ ml: 1, price: 22 }, { ml: 5, price: 99, free: true }] },
   // pick：一个系列多种味道、同一个价，顾客点开自己挑。
   // 规格写了 mix: true 的是「凑一瓶」：最多 max 种、每种至少 min 毫升、凑满 total 毫升；没写 mix 的是单买，挑几种就是几支
-  { id: 'P009', pic: 'p/P009.jpg', brand: 'Demeter 帝门特', name: '气味图书馆', en: 'Demeter Fragrance Library', family: 'fresh', gender: '中性', season: ['春', '夏', '秋', '冬'],
+  { id: 'P009', pic: 'p/P009.jpg', brand: 'Demeter 帝门特', name: '气味图书馆合集', en: 'Demeter Fragrance Library', family: 'fresh', gender: '中性', season: ['春', '夏', '秋', '冬'],
     say: '把生活里的味道装进瓶子：雨前的风、旧书页、刚磨的咖啡',
     pick: { max: 5, total: 10, min: 2, options: ['暴风雨', '初生婴儿', '平装书', '现磨咖啡', '忍冬', '竹子', '金汤力', '婴儿爽身粉', '纯牛奶', '凤梨椰奶酒',
       '桃子', '姜汁汽水', '纯净肌肤', '山间空气', '咸空气', '西瓜棒棒糖', '洗衣间', '青草', '巧克力曲奇', '黑巧克力'] },
@@ -62,4 +62,10 @@ const PERFUMES = [
   { id: 'P015', pic: 'p/P015.jpg', brand: 'YSL 圣罗兰', name: '反转巴黎 · 波点淡香', en: 'Mon Paris · EDT', family: 'floral', gender: '女', season: ['春', '夏'],
     say: '巴黎春天的约会，梨和莓果甜得软乎乎的，比浓香版轻盈俏皮', top: '梨、红莓、佛手柑', heart: '白牡丹、茉莉、橙花', base: '白麝香、广藿香',
     sizes: [{ ml: 1, price: 8 }, { ml: 10, price: 69, free: true }] },
+  { id: 'P016', pic: 'p/P016.jpg', brand: 'Jo Malone 祖玛珑', name: '虞美人与大麦', en: 'Poppy & Barley · Cologne', family: 'fresh', gender: '中性', season: ['春', '夏'],
+    say: '初夏风吹过的麦田，田埂边开着一片红虞美人，干净又有点青涩', top: '黑加仑', heart: '虞美人、玫瑰', base: '大麦、麦麸',
+    sizes: [{ ml: 1, price: 8 }, { ml: 10, price: 69, free: true }] },
+  { id: 'P017', pic: 'p/P017.jpg', brand: 'Hermès 爱马仕', name: '橘彩星光', en: 'Eau des Merveilles · EDT', family: 'woody', gender: '中性', season: ['秋', '冬'],
+    say: '橙皮和琥珀混着一点咸咸的海风，像夜里海面上碎碎的星光', top: '橙子、柠檬、粉红胡椒', heart: '榄香脂、胡椒', base: '琥珀、橡木苔、雪松、岩兰草',
+    sizes: [{ ml: 1, price: 8 }, { ml: 10, price: 59, free: true }] },
 ];

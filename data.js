@@ -50,4 +50,7 @@ const PERFUMES = [
   { id: 'P011', pic: 'p/P011.jpg', brand: 'Armani Privé 阿玛尼', name: '玉龙茶香', en: 'Thé Yulong · EDT', family: 'fresh', gender: '中性', season: ['春', '夏'],
     say: '一杯刚泡开的绿茶，茶汤清亮，混着一点桂花和姜的暖', top: '柑橘、生姜', heart: '绿茶、桂花、茉莉', base: '白麝香、木质调',
     sizes: [{ ml: 1, price: 9 }, { ml: 10, price: 75, free: true }] },
+  { id: 'P012', pic: 'p/P012.jpg', brand: 'Armani Privé 阿玛尼', name: '苏州牡丹 · 流沙版', en: 'Pivoine Suzhou · Soie de Nacre', family: 'floral', gender: '女', season: ['春', '夏'],
+    say: '园林里盛开的粉牡丹，瓶里的珠光像流沙一样慢慢转', top: '粉红胡椒、柑橘', heart: '牡丹、玫瑰、铃兰', base: '白麝香、木质调',
+    sizes: [{ ml: 1, price: 10 }, { ml: 10, price: 85, free: true }] },
 ];

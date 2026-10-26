@@ -252,7 +252,7 @@ let bag = JSON.parse(localStorage.getItem('decant-bag') || '[]');
 const byId = id => PERFUMES.find(p => p.id === id);
 const minPrice = p => Math.min(...p.sizes.map(s => s.price));
 const free = s => s.free ? ' 包邮' : '';
-const picked = x => x.pick && x.pick.length ? `（${x.pick.map(k => `${k.n} ${k.ml}ml`).join('、')}）` : '';
+const picked = (x, s) => !x.pick || !x.pick.length ? '' : s.mix ? `（${x.pick.map(k => `${k.n} ${k.ml}ml`).join('、')}）` : ` · ${x.pick[0].n}`;
 const mlSum = a => a.reduce((t, k) => t + k.ml, 0);
 const pic = p => `<div class="pic"><img src="img/${p.pic || SKIN + '/b-' + p.family + '.jpg'}" alt=""></div>`;
 const corners = ['t', 'b'].map(c => `<img class="fl ${c}" src="img/${SKIN}/fleuron.png" alt="">`).join('');
@@ -308,7 +308,7 @@ function render() {
         <div class="en">${p.en}</div>
         <img class="div" src="img/${SKIN}/divider.png" alt="">
         <div class="say">${p.say}</div>
-        <div class="tagline">${p.pick ? `${p.pick.options.length} 种味道 · 任选 ${p.pick.max} 种以内` : `${FAM[p.family].label} · ${p.gender === '中性' ? '中性' : p.gender + '香'} · ${p.season.join('')}`}</div>
+        <div class="tagline">${p.pick ? `${p.pick.options.length} 种味道 · 可单买 · 可凑 ${p.pick.total}ml` : `${FAM[p.family].label} · ${p.gender === '中性' ? '中性' : p.gender + '香'} · ${p.season.join('')}`}</div>
       </div>
       <div class="sizes-mini">${p.sizes.map(s => `<span>${s.ml}ml<b>¥${s.price}${s.free ? '<em>包邮</em>' : ''}</b></span>`).join('')}</div>
     </article>`).join('') : `<div class="empty" style="grid-column:1/-1">没有找到合适的，换个条件试试</div>`;
@@ -327,24 +327,25 @@ function openDetail(id) {
     <div class="d-top">${pic(p)}<div><div class="brand">${p.brand} · ${p.id}</div><div class="name">${p.name}</div><div class="en">${p.en}</div></div></div>
     <div class="quote">${p.say}</div>
     <div class="tags"><span class="tag">${FAM[p.family].label}</span><span class="tag">${p.gender === '中性' ? '中性' : p.gender + '香'}</span>${p.season.map(s => `<span class="tag">${s}</span>`).join('')}</div>
-    ${p.pick ? `<div class="h">挑你想要的味道 · 最多 ${p.pick.max} 种，每种至少 ${p.pick.min}ml</div>
+    ${p.pick ? `<div class="h">先选规格</div>${sizesHtml(p)}
+    <div class="h" id="pickH"></div>
     <div class="picks">${p.pick.options.map(o => `<button class="pk" data-pk="${o}">${o}</button>`).join('')}</div>
-    <div class="h">配比 · 凑满 ${p.pick.total}ml<b id="pickN"></b></div><div class="mix" id="mix"></div>` : `
+    <div id="mixWrap"><div class="h">配比 · 凑满 ${p.pick.total}ml<b id="pickN"></b></div><div class="mix" id="mix"></div></div>` : `
     <div class="notes">
       <div class="note"><span>前调</span><div>${p.top}</div></div>
       <div class="note"><span>中调</span><div>${p.heart}</div></div>
       <div class="note"><span>后调</span><div>${p.base}</div></div>
     </div>`}
-    <div class="h">选择分装规格</div>
-    <div class="sizes">${p.sizes.map((s, i) => `<button class="size ${i === curSize ? 'on' : ''}" data-size="${i}"><b>${s.ml}ml</b><em>¥${s.price}${free(s)}</em></button>`).join('')}</div>
+    ${p.pick ? '' : `<div class="h">选择分装规格</div>${sizesHtml(p)}`}
     <div class="acts"><button class="btn line" data-copy1>复制这一款</button><button class="btn dark" data-put>加入小样盒</button></div>`;
+  if (p.pick) drawMix();
   open();
 }
 
 // 小样盒
 function saveBag() { localStorage.setItem('decant-bag', JSON.stringify(bag)); }
 function bagTotal() { return bag.reduce((t, x) => t + byId(x.id).sizes[x.s].price, 0); }
-function line(x, i) { const p = byId(x.id), s = p.sizes[x.s]; return `${i + 1}. ${p.id} ${p.brand} ${p.name}${picked(x)} · ${s.ml}ml ¥${s.price}${free(s)}`; }
+function line(x, i) { const p = byId(x.id), s = p.sizes[x.s]; return `${i + 1}. ${p.id} ${p.brand} ${p.name}${picked(x, s)} · ${s.ml}ml ¥${s.price}${free(s)}`; }
 function renderBag() {
   bag = bag.filter(x => byId(x.id) && byId(x.id).sizes[x.s] && (!x.pick || typeof x.pick[0] === 'object'));
   $('#bag').classList.toggle('show', bag.length > 0);
@@ -367,20 +368,28 @@ $('#bagOpen').onclick = openBag;
 $('#sheet').onclick = e => {
   const t = e.target.closest('button'); if (!t) return;
   if (t.hasAttribute('data-close')) close();
-  else if (t.dataset.size) { curSize = +t.dataset.size; document.querySelectorAll('.size').forEach((b, i) => b.classList.toggle('on', i === curSize)); }
+  else if (t.dataset.size) {
+    curSize = +t.dataset.size; document.querySelectorAll('.size').forEach((b, i) => b.classList.toggle('on', i === curSize));
+    if (cur.pick) {
+      if (isMix() && curPick.length > cur.pick.max) { curPick = curPick.slice(0, cur.pick.max); toast(`凑一瓶最多 ${cur.pick.max} 种，只留了前 ${cur.pick.max} 种`); }
+      split(); drawMix();
+    }
+  }
   else if (t.dataset.pk) {
     const o = t.dataset.pk, k = curPick.findIndex(x => x.n === o);
     k < 0 ? curPick.push({ n: o, ml: 0 }) : curPick.splice(k, 1);
-    // 增减味道后重新平分：10ml 分 3 种就是 4、3、3
-    const { total } = cur.pick, n = curPick.length;
-    curPick.forEach((x, i) => x.ml = Math.floor(total / n) + (i < total % n ? 1 : 0));
-    drawMix();
+    split(); drawMix();
   }
   else if (t.dataset.ml) {
     const [i, d] = t.dataset.ml.split(',').map(Number); curPick[i].ml += d; drawMix();
   }
   else if (t.hasAttribute('data-put')) {
     if (cur.pick && !pickOk()) return;
+    if (cur.pick && !isMix()) {  // 单买：挑了几种就放几支
+      const add = curPick.filter(x => !bag.some(b => b.id === cur.id && b.s === curSize && b.pick[0].n === x.n));
+      add.forEach(x => bag.push({ id: cur.id, s: curSize, pick: [{ ...x }] }));
+      saveBag(); render(); close(); toast(add.length ? `已放进 ${add.length} 支` : '这几种都已经在小样盒里啦'); return;
+    }
     const pk = cur.pick ? curPick.map(x => ({ ...x })) : undefined, same = x => x.id === cur.id && x.s === curSize && JSON.stringify(x.pick || []) === JSON.stringify(pk || []);
     const k = bag.findIndex(same);
     if (k < 0) bag.push({ id: cur.id, s: curSize, pick: pk });
@@ -388,13 +397,24 @@ $('#sheet').onclick = e => {
   }
   else if (t.hasAttribute('data-copy1')) {
     if (cur.pick && !pickOk()) return;
-    const s = cur.sizes[curSize]; copy(`你好～我想要：${cur.id} ${cur.brand} ${cur.name}${picked({ pick: curPick })} · ${s.ml}ml ¥${s.price}${free(s)}`); }
+    const s = cur.sizes[curSize], one = pk => `${cur.id} ${cur.brand} ${cur.name}${picked({ pick: pk }, s)} · ${s.ml}ml ¥${s.price}${free(s)}`;
+    copy(cur.pick && !isMix() ? `你好～我想要：\n${curPick.map(x => one([x])).join('\n')}\n合计 ¥${s.price * curPick.length}` : `你好～我想要：${one(curPick)}`); }
   else if (t.dataset.rm) { bag.splice(+t.dataset.rm, 1); saveBag(); render(); openBag(); }
   else if (t.hasAttribute('data-copyall')) copy(`你好～我想要这些：\n${bag.map(line).join('\n')}\n合计 ¥${bagTotal()}`);
 };
 
-// 帝门特这类任选系列：画配比、检查有没有凑满
+// 帝门特这类任选系列：单买（每种一支）或凑一瓶（配比）
+const sizesHtml = p => `<div class="sizes">${p.sizes.map((s, i) => `<button class="size ${i === curSize ? 'on' : ''}" data-size="${i}"><b>${s.ml}ml${s.mix ? ' 凑一瓶' : p.pick ? ' 单买' : ''}</b><em>¥${s.price}${free(s)}</em></button>`).join('')}</div>`;
+const isMix = () => !!cur.sizes[curSize].mix;
+function split() {  // 凑一瓶时把毫升平分：10ml 分 3 种就是 4、3、3；单买每种就是这个规格
+  const s = cur.sizes[curSize], n = curPick.length, total = s.mix ? cur.pick.total : 0;
+  curPick.forEach((x, i) => x.ml = s.mix ? Math.floor(total / n) + (i < total % n ? 1 : 0) : s.ml);
+}
 function drawMix() {
+  const s = cur.sizes[curSize];
+  $('#mixWrap').hidden = !s.mix;
+  $('#pickH').innerHTML = s.mix ? `挑味道 · 最多 ${cur.pick.max} 种，每种至少 ${cur.pick.min}ml` : `挑味道 · 一种一支，可多选${curPick.length ? `<b>已选 ${curPick.length} 支 ¥${s.price * curPick.length}</b>` : ''}`;
+  if (!s.mix) { document.querySelectorAll('.pk').forEach(b => { b.classList.toggle('on', curPick.some(x => x.n === b.dataset.pk)); b.disabled = false; }); return; }
   const { max, total, min } = cur.pick, sum = mlSum(curPick), full = curPick.length >= max;
   document.querySelectorAll('.pk').forEach(b => { const on = curPick.some(x => x.n === b.dataset.pk); b.classList.toggle('on', on); b.disabled = full && !on; });
   $('#mix').innerHTML = curPick.map((x, i) => `<div class="mx">${x.n}<span><button data-ml="${i},-1" ${x.ml <= min ? 'disabled' : ''}>−</button><b>${x.ml}ml</b><button data-ml="${i},1" ${sum >= total ? 'disabled' : ''}>+</button></span></div>`).join('');
@@ -403,6 +423,7 @@ function drawMix() {
 function pickOk() {
   const { total } = cur.pick, sum = mlSum(curPick);
   if (!curPick.length) { toast('先挑几种味道吧'); return false; }
+  if (!isMix()) return true;
   if (sum !== total) { toast(sum < total ? `还差 ${total - sum}ml 凑满 ${total}ml` : `多了 ${sum - total}ml，减掉一点吧`); return false; }
   return true;
 }

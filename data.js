@@ -37,10 +37,11 @@ const PERFUMES = [
   { id: 'P008', pic: 'p/P008.jpg', brand: 'Tom Ford 汤姆福特', name: '乌木沉香 · 19年老版', en: 'Oud Wood · EDP', family: 'woody', gender: '中性', season: ['秋', '冬'],
     say: '老书房里的檀木和沉香，带一点小豆蔻的辛辣，安静又贵气', top: '花梨木、小豆蔻、四川花椒', heart: '沉香木、檀香木、岩兰草', base: '零陵香豆、香草、琥珀',
     sizes: [{ ml: 1, price: 22 }, { ml: 5, price: 99, free: true }] },
-  // pick：一个系列多种味道、同一个价，顾客点开自己挑（最多 max 种），凑满 total 毫升、每种至少 min 毫升；清单里写明每种几毫升
-  { id: 'P009', pic: 'p/P009.jpg', brand: 'Demeter 帝门特', name: '气味图书馆 · 任选五种', en: 'Demeter Fragrance Library', family: 'fresh', gender: '中性', season: ['春', '夏', '秋', '冬'],
+  // pick：一个系列多种味道、同一个价，顾客点开自己挑。
+  // 规格写了 mix: true 的是「凑一瓶」：最多 max 种、每种至少 min 毫升、凑满 total 毫升；没写 mix 的是单买，挑几种就是几支
+  { id: 'P009', pic: 'p/P009.jpg', brand: 'Demeter 帝门特', name: '气味图书馆', en: 'Demeter Fragrance Library', family: 'fresh', gender: '中性', season: ['春', '夏', '秋', '冬'],
     say: '把生活里的味道装进瓶子：雨前的风、旧书页、刚磨的咖啡',
     pick: { max: 5, total: 10, min: 2, options: ['暴风雨', '初生婴儿', '平装书', '现磨咖啡', '忍冬', '竹子', '金汤力', '婴儿爽身粉', '纯牛奶', '凤梨椰奶酒',
       '桃子', '姜汁汽水', '纯净肌肤', '山间空气', '咸空气', '西瓜棒棒糖', '洗衣间', '青草', '巧克力曲奇', '黑巧克力'] },
-    sizes: [{ ml: 10, price: 39, free: true }] },
+    sizes: [{ ml: 2, price: 10 }, { ml: 10, price: 39, free: true, mix: true }] },
 ];

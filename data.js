@@ -47,4 +47,7 @@ const PERFUMES = [
   { id: 'P010', pic: 'p/P010.jpg', brand: 'Montblanc 万宝龙', name: '纯白印记 · 墨水瓶', en: 'Signature · EDP', family: 'floral', gender: '女', season: ['春', '秋', '冬'],
     say: '干净的白麝香裹着木兰和桂花，像刚洗过的白衬衫，温柔不张扬', top: '橘子', heart: '木兰、桂花、牡丹', base: '白麝香、香草、安息香',
     sizes: [{ ml: 1, price: 7 }, { ml: 10, price: 59, free: true }] },
+  { id: 'P011', pic: 'p/P011.jpg', brand: 'Armani Privé 阿玛尼', name: '玉龙茶香', en: 'Thé Yulong · EDT', family: 'fresh', gender: '中性', season: ['春', '夏'],
+    say: '一杯刚泡开的绿茶，茶汤清亮，混着一点桂花和姜的暖', top: '柑橘、生姜', heart: '绿茶、桂花、茉莉', base: '白麝香、木质调',
+    sizes: [{ ml: 1, price: 9 }, { ml: 10, price: 75, free: true }] },
 ];

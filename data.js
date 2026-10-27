@@ -68,4 +68,7 @@ const PERFUMES = [
   { id: 'P017', pic: 'p/P017.jpg', brand: 'Hermès 爱马仕', name: '橘彩星光', en: 'Eau des Merveilles · EDT', family: 'woody', gender: '中性', season: ['秋', '冬'],
     say: '橙皮和琥珀混着一点咸咸的海风，像夜里海面上碎碎的星光', top: '橙子、柠檬、粉红胡椒', heart: '榄香脂、胡椒', base: '琥珀、橡木苔、雪松、岩兰草',
     sizes: [{ ml: 1, price: 8 }, { ml: 10, price: 59, free: true }] },
+  { id: 'P018', pic: 'p/P018.jpg', brand: 'Penhaligon\'s 潘海利根', name: '露娜月亮女 · 紫色老版', en: 'Luna · EDT', family: 'citrus', gender: '女', season: ['春', '夏'],
+    say: '月光下的柑橘园，苦橙和杜松子凉凉的，像夜里一阵清透的风', top: '苦橙、柠檬、佛手柑', heart: '杜松子、玫瑰、茉莉', base: '琥珀、苔藓、冷杉香脂',
+    sizes: [{ ml: 1, price: 19 }, { ml: 10, price: 189, free: true }] },
 ];

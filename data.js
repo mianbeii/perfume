@@ -38,10 +38,10 @@ const PERFUMES = [
     say: '老书房里的檀木和沉香，带一点小豆蔻的辛辣，安静又贵气', top: '花梨木、小豆蔻、四川花椒', heart: '沉香木、檀香木、岩兰草', base: '零陵香豆、香草、琥珀',
     sizes: [{ ml: 1, price: 22 }, { ml: 5, price: 99, free: true }] },
   // pick：一个系列多种味道、同一个价，顾客点开自己挑。
-  // 规格写了 mix: true 的是「凑一瓶」：最多 max 种、每种至少 min 毫升、凑满 total 毫升；没写 mix 的是单买，挑几种就是几支
+  // 规格写了 mix: true 的是「凑一瓶」：最多 max 种、每种至少 min 毫升、凑满这个规格的毫升数；没写 mix 的是单买，挑几种就是几支
   { id: 'P009', pic: 'p/P009.jpg', brand: 'Demeter 帝门特', name: '气味图书馆合集', en: 'Demeter Fragrance Library', family: 'fresh', gender: '中性', season: ['春', '夏', '秋', '冬'],
     say: '把生活里的味道装进瓶子：雨前的风、旧书页、刚磨的咖啡',
-    pick: { max: 5, total: 10, min: 2, options: ['暴风雨', '初生婴儿', '平装书', '现磨咖啡', '忍冬', '竹子', '金汤力', '婴儿爽身粉', '纯牛奶', '凤梨椰奶酒',
+    pick: { max: 5, min: 2, options: ['暴风雨', '初生婴儿', '平装书', '现磨咖啡', '忍冬', '竹子', '金汤力', '婴儿爽身粉', '纯牛奶', '凤梨椰奶酒',
       '桃子', '姜汁汽水', '纯净肌肤', '山间空气', '咸空气', '西瓜棒棒糖', '洗衣间', '青草', '巧克力曲奇', '黑巧克力'] },
     sizes: [{ ml: 2, price: 10 }, { ml: 10, price: 39, free: true, mix: true }] },
   { id: 'P010', pic: 'p/P010.jpg', brand: 'Montblanc 万宝龙', name: '纯白印记 · 墨水瓶', en: 'Signature · EDP', family: 'floral', gender: '女', season: ['春', '秋', '冬'],
@@ -83,4 +83,8 @@ const PERFUMES = [
   { id: 'P022', pic: 'p/P022.jpg', brand: 'Jo Malone 祖玛珑', name: '白茉莉与薄荷 · 14年伦敦雨限量', en: 'White Jasmine & Mint · Cologne', family: 'fresh', gender: '中性', season: ['春', '夏'],
     say: '伦敦下过雨的花园，薄荷叶上挂着水珠，白茉莉清清凉凉地开着', top: '薄荷', heart: '白茉莉', base: '麝香、绿叶',
     sizes: [{ ml: 1, price: 20 }, { ml: 10, price: 189, free: true }] },
+  { id: 'P023', pic: 'p/P023.jpg', brand: 'Ariana Grande 爱莉安娜', name: '香水合集', en: 'Ariana Grande Collection', family: 'sweet', gender: '女', season: ['春', '夏', '秋', '冬'],
+    say: '三支甜甜的小仙女：月光下的梦、轻飘飘的云、一口软糖',
+    pick: { max: 3, min: 1, options: ['Moonlight', 'Air', 'Sweet Like Candy'] },
+    sizes: [{ ml: 1, price: 7 }, { ml: 5, price: 29, mix: true }, { ml: 10, price: 55, free: true, mix: true }] },
 ];

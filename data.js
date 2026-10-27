@@ -71,4 +71,7 @@ const PERFUMES = [
   { id: 'P018', pic: 'p/P018.jpg', brand: 'Penhaligon\'s 潘海利根', name: '露娜月亮女 · 紫色老版', en: 'Luna · EDT', family: 'citrus', gender: '女', season: ['春', '夏'],
     say: '月光下的柑橘园，苦橙和杜松子凉凉的，像夜里一阵清透的风', top: '苦橙、柠檬、佛手柑', heart: '杜松子、玫瑰、茉莉', base: '琥珀、苔藓、冷杉香脂',
     sizes: [{ ml: 1, price: 19 }, { ml: 10, price: 189, free: true }] },
+  { id: 'P019', pic: 'p/P019.jpg', brand: 'Zegna 杰尼亚', name: '香柠檬之水', en: 'Italian Bergamot · EDT', family: 'citrus', gender: '男', season: ['春', '夏'],
+    say: '意大利海边刚剥开的香柠檬，清爽带一点点苦，像一件熨好的白衬衫', top: '香柠檬、柠檬、橘子', heart: '橙花、薰衣草', base: '岩兰草、雪松',
+    sizes: [{ ml: 1, price: 10 }, { ml: 5, price: 44 }, { ml: 10, price: 89, free: true }] },
 ];

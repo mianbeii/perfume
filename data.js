@@ -103,4 +103,10 @@ const PERFUMES = [
   { id: 'P028', pic: 'p/P028.jpg', brand: 'Hermès 爱马仕', name: '丝巾', en: "Twilly d'Hermès · EDP", family: 'floral', gender: '女', season: ['春', '夏', '秋'],
     say: '系着丝巾的俏皮女孩，生姜一口辣辣地开场，晚香玉甜甜地绕上来', top: '生姜', heart: '晚香玉', base: '檀香木',
     sizes: [{ ml: 1, price: 8 }, { ml: 10, price: 69, free: true }] },
+  { id: 'P029', pic: 'p/P029.jpg', brand: "Etat Libre d'Orange 解放橘郡", name: '赫曼如影', en: "Hermann à mes côtés me paraissait une ombre · EDP", family: 'woody', gender: '中性', season: ['秋', '冬'],
+    say: '雨后树林里的一道影子，湿泥土、黑胡椒和焚香，安静又有点哥特', top: '黑胡椒、白松香、黑醋栗', heart: '乳香、玫瑰、雨后泥土', base: '岩兰草、广藿香、琥珀',
+    sizes: [{ ml: 1, price: 10 }, { ml: 10, price: 89, free: true }] },
+  { id: 'P030', pic: 'p/P030.jpg', brand: "Etat Libre d'Orange 解放橘郡", name: '龙与玫瑰', en: 'Rossy de Palma · Eau de Protection', family: 'floral', gender: '中性', season: ['秋', '冬'],
+    say: '浓烈的保加利亚玫瑰缠着生姜和黑胡椒，焚香里藏一点巧克力，美得有脾气', top: '佛手柑、生姜、黑胡椒', heart: '保加利亚玫瑰、乳香', base: '可可、广藿香、麝香',
+    sizes: [{ ml: 1, price: 10 }, { ml: 10, price: 89, free: true }] },
 ];

@@ -308,7 +308,7 @@ function render() {
         <div class="en">${p.en}</div>
         <img class="div" src="img/${SKIN}/divider.png" alt="">
         <div class="say">${p.say}</div>
-        <div class="tagline">${p.pick ? `${p.pick.options.length} 种味道 · 可单买 · 可凑 ${p.sizes.filter(s => s.mix).map(s => s.ml).join('/')}ml` : `${FAM[p.family].label} · ${p.gender === '中性' ? '中性' : p.gender + '香'} · ${p.season.join('')}`}</div>
+        <div class="tagline">${p.pick ? `${p.pick.options.length} 种味道 · 可单买${p.sizes.some(s => s.mix) ? ` · 可凑 ${p.sizes.filter(s => s.mix).map(s => s.ml).join('/')}ml` : ''}` : `${FAM[p.family].label} · ${p.gender === '中性' ? '中性' : p.gender + '香'} · ${p.season.join('')}`}</div>
       </div>
       <div class="sizes-mini">${p.sizes.map(s => `<span>${s.ml}ml<b>¥${s.price}${s.free ? '<em>包邮</em>' : ''}</b></span>`).join('')}</div>
     </article>`).join('') : `<div class="empty" style="grid-column:1/-1">没有找到合适的，换个条件试试</div>`;

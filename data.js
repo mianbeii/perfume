@@ -87,4 +87,11 @@ const PERFUMES = [
     say: '三支甜甜的小仙女：月光下的梦、轻飘飘的云、一口软糖',
     pick: { max: 3, min: 1, options: ['Moonlight', 'Air', 'Sweet Like Candy'] },
     sizes: [{ ml: 1, price: 7 }, { ml: 5, price: 29, mix: true }, { ml: 10, price: 55, free: true, mix: true }] },
+  { id: 'P024', pic: 'p/P024.jpg', brand: 'Bvlgari 宝格丽', name: '大吉岭茶合集', en: 'Pour Homme · Pour Homme Extreme', family: 'fresh', gender: '中性', season: ['春', '夏', '秋'],
+    say: '一杯清透的大吉岭红茶：原版干净斯文，极致多一分柑橘和木头，更利落',
+    pick: { max: 2, min: 1, options: ['原版', '极致'] },
+    sizes: [{ ml: 1, price: 7 }, { ml: 10, price: 59, free: true }] },
+  { id: 'P025', pic: 'p/P025.jpg', brand: 'Bvlgari 宝格丽', name: '大吉岭茶 · 夜色', en: 'Pour Homme Soir · EDT', family: 'woody', gender: '中性', season: ['秋', '冬'],
+    say: '傍晚泡浓了的红茶，小豆蔻微微辛香，收尾是暖暖的琥珀麝香', top: '佛手柑、小豆蔻、芫荽', heart: '大吉岭茶、乳香', base: '琥珀、麝香、莎草',
+    sizes: [{ ml: 1, price: 10 }, { ml: 10, price: 96, free: true }] },
 ];

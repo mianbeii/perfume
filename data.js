@@ -74,4 +74,7 @@ const PERFUMES = [
   { id: 'P019', pic: 'p/P019.jpg', brand: 'Zegna 杰尼亚', name: '香柠檬之水', en: 'Italian Bergamot · EDT', family: 'citrus', gender: '男', season: ['春', '夏'],
     say: '意大利海边刚剥开的香柠檬，清爽带一点点苦，像一件熨好的白衬衫', top: '香柠檬、柠檬、橘子', heart: '橙花、薰衣草', base: '岩兰草、雪松',
     sizes: [{ ml: 1, price: 10 }, { ml: 5, price: 44 }, { ml: 10, price: 89, free: true }] },
+  { id: 'P020', pic: 'p/P020.jpg', brand: 'YSL 圣罗兰', name: '黑鸦片 · 淡香', en: 'Black Opium · EDT', family: 'sweet', gender: '女', season: ['秋', '冬'],
+    say: '深夜的一杯香草拿铁，咖啡和白花甜甜地缠在一起，比浓香版更轻快', top: '梨、粉红胡椒、橙花', heart: '咖啡、茉莉', base: '香草、广藿香、雪松',
+    sizes: [{ ml: 1, price: 8 }, { ml: 5, price: 38 }, { ml: 10, price: 75, free: true }] },
 ];

@@ -94,4 +94,13 @@ const PERFUMES = [
   { id: 'P025', pic: 'p/P025.jpg', brand: 'Bvlgari 宝格丽', name: '大吉岭茶 · 夜色', en: 'Pour Homme Soir · EDT', family: 'woody', gender: '中性', season: ['秋', '冬'],
     say: '傍晚泡浓了的红茶，小豆蔻微微辛香，收尾是暖暖的琥珀麝香', top: '佛手柑、小豆蔻、芫荽', heart: '大吉岭茶、乳香', base: '琥珀、麝香、莎草',
     sizes: [{ ml: 1, price: 10 }, { ml: 10, price: 96, free: true }] },
+  { id: 'P026', pic: 'p/P026.jpg', brand: 'Amouage 爱慕', name: '回忆录 · 男士', en: 'Memoir Man · EDP', family: 'woody', gender: '男', season: ['秋', '冬'],
+    say: '苦艾和薄荷开场，乳香烟雾慢慢升起，最后落在旧皮革和苔藓里，像一本翻旧了的日记', top: '苦艾、薄荷、罗勒、粉红胡椒', heart: '乳香、玫瑰、薰衣草', base: '皮革、橡木苔、岩兰草、愈创木',
+    sizes: [{ ml: 1, price: 20 }, { ml: 10, price: 199, free: true }] },
+  { id: 'P027', pic: 'p/P027.jpg', brand: 'Acca Kappa 艾克卡帕', name: '白苔', en: 'White Moss · EDC', family: 'fresh', gender: '中性', season: ['春', '夏'],
+    say: '晒过太阳的白床单上落了一点青苔，干净、柔软，像刚洗完澡', top: '佛手柑、柠檬', heart: '铃兰、紫罗兰、玫瑰', base: '白麝香、橡木苔、琥珀',
+    sizes: [{ ml: 1, price: 5 }, { ml: 10, price: 39 }] },
+  { id: 'P028', pic: 'p/P028.jpg', brand: 'Hermès 爱马仕', name: '丝巾', en: "Twilly d'Hermès · EDP", family: 'floral', gender: '女', season: ['春', '夏', '秋'],
+    say: '系着丝巾的俏皮女孩，生姜一口辣辣地开场，晚香玉甜甜地绕上来', top: '生姜', heart: '晚香玉', base: '檀香木',
+    sizes: [{ ml: 1, price: 8 }, { ml: 10, price: 69, free: true }] },
 ];

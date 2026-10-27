@@ -77,4 +77,10 @@ const PERFUMES = [
   { id: 'P020', pic: 'p/P020.jpg', brand: 'YSL 圣罗兰', name: '黑鸦片 · 淡香', en: 'Black Opium · EDT', family: 'sweet', gender: '女', season: ['秋', '冬'],
     say: '深夜的一杯香草拿铁，咖啡和白花甜甜地缠在一起，比浓香版更轻快', top: '梨、粉红胡椒、橙花', heart: '咖啡、茉莉', base: '香草、广藿香、雪松',
     sizes: [{ ml: 1, price: 8 }, { ml: 5, price: 38 }, { ml: 10, price: 75, free: true }] },
+  { id: 'P021', pic: 'p/P021.jpg', brand: 'Parfums Dusita 达西塔', name: '白象护卫', en: 'Erawan', family: 'woody', gender: '中性', season: ['春', '秋'],
+    say: '雨后的泰国山林，苦艾和柏木湿漉漉的，安静又有点神秘', top: '苦艾、佛手柑、龙蒿', heart: '柏木、快乐鼠尾草、薰衣草', base: '岩兰草、广藿香、雪松',
+    sizes: [{ ml: 1, price: 10 }] },
+  { id: 'P022', pic: 'p/P022.jpg', brand: 'Jo Malone 祖玛珑', name: '白茉莉与薄荷 · 14年伦敦雨限量', en: 'White Jasmine & Mint · Cologne', family: 'fresh', gender: '中性', season: ['春', '夏'],
+    say: '伦敦下过雨的花园，薄荷叶上挂着水珠，白茉莉清清凉凉地开着', top: '薄荷', heart: '白茉莉', base: '麝香、绿叶',
+    sizes: [{ ml: 1, price: 20 }, { ml: 10, price: 189, free: true }] },
 ];

@@ -25,6 +25,10 @@ body{padding-bottom:110px}
 .hero{position:relative;height:min(118vw,560px);margin-top:-70px;overflow:hidden;touch-action:pan-y}
 .silk{position:absolute;inset:-20px;background:url(img/silk.jpg) center 60%/cover no-repeat;will-change:transform}
 .hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,var(--ivory))}
+.cotton{position:absolute;left:50%;bottom:calc(9% - 14px);width:min(116vw,640px);aspect-ratio:1200/379;
+  background:url(img/cotton.jpg) center/100% 100% no-repeat;mix-blend-mode:multiply;filter:blur(.6px);opacity:.85;
+  -webkit-mask-image:linear-gradient(transparent,#000 14%,#000 90%,transparent);mask-image:linear-gradient(transparent,#000 14%,#000 90%,transparent);
+  transform:translateX(-50%);z-index:1;will-change:transform}
 .stage{position:absolute;left:50%;bottom:9%;width:min(52vw,250px);transform:translateX(-50%);z-index:2;mix-blend-mode:multiply}
 .shadow{position:absolute;left:12%;right:12%;bottom:-6px;height:22px;border-radius:50%;
   background:radial-gradient(ellipse at center,rgba(120,90,40,.28),transparent 70%);will-change:transform}
@@ -86,6 +90,7 @@ body{padding-bottom:110px}
 
 <section class="hero" id="hero">
   <div class="silk" id="silk"></div>
+  <div class="cotton" id="cotton"></div>
   <div class="stage">
     <div class="shadow" id="shadow"></div>
     <img class="bottle" id="bottle" src="img/bottle.jpg" alt="Mianbei Parfum 香水瓶" draggable="false">
@@ -108,7 +113,7 @@ body{padding-bottom:110px}
 (() => {
   const hero = document.getElementById('hero'), bottle = document.getElementById('bottle'),
         silk = document.getElementById('silk'), shadow = document.getElementById('shadow'),
-        hint = document.getElementById('hint');
+        hint = document.getElementById('hint'), cotton = document.getElementById('cotton');
   let ang = 0, va = 0, ta = 0;   // 角度
   let x = 0, vx = 0, tx = 0;     // 平移
   const K = 0.055, D = 0.86;     // 弹力、阻尼：松手后会晃两下再停
@@ -120,6 +125,7 @@ body{padding-bottom:110px}
     bottle.style.transform = `translateX(${x.toFixed(2)}px) rotate(${ang.toFixed(3)}deg)`;
     shadow.style.transform = `translateX(${(x * .6).toFixed(2)}px) scaleX(${(1 + Math.abs(ang) * .015).toFixed(3)})`;
     silk.style.transform = `translateX(${(-x * .35).toFixed(2)}px)`;
+    cotton.style.transform = `translateX(calc(-50% + ${(-x * .15).toFixed(2)}px))`;
     requestAnimationFrame(loop);
   })();
 

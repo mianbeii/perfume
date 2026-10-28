@@ -35,7 +35,7 @@ const PERFUMES = [
     sizes: [{ ml: 1, price: 15 }, { ml: 5, price: 79, free: true }, { ml: 10, price: 139, free: true }] },
   { id: 'P007', pic: 'p/P007.jpg', brand: 'Zarkoperfume 扎科之香', name: '无情粉', en: 'Pink Molécule 090.09', family: 'fresh', gender: '中性', season: ['春', '夏', '秋'],
     say: '杏子和接骨木花，干干净净的粉色，越闻越像自己的皮肤', top: '接骨木莓、杏子、兰花', heart: '没有中调，前调直接落到木香里', base: '桃花心木、奶油、木质调',
-    sizes: [{ ml: 1, price: 12 }, { ml: 5, price: 59, free: true }, { ml: 10, price: 109, free: true }] },
+    sizes: [{ ml: 1, price: 13 }, { ml: 10, price: 119, free: true }] },
   { id: 'P008', pic: 'p/P008.jpg', brand: 'Tom Ford 汤姆福特', name: '乌木沉香 · 19年老版', en: 'Oud Wood · EDP', family: 'woody', gender: '中性', season: ['秋', '冬'],
     say: '老书房里的檀木和沉香，带一点小豆蔻的辛辣，安静又贵气', top: '花梨木、小豆蔻、四川花椒', heart: '沉香木、檀香木、岩兰草', base: '零陵香豆、香草、琥珀',
     sizes: [{ ml: 1, price: 22 }, { ml: 5, price: 99, free: true }] },

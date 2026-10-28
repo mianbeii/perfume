@@ -10,6 +10,8 @@ const SHOP = {
   tip: '看中了点「加入小样盒」，挑完一键复制清单，回闲鱼发给我就好',
   // 闲鱼主页的分享链接（闲鱼 → 我的 → 个人主页 → 分享 → 复制链接，整段贴进来）
   xianyu: '【闲鱼】https://m.tb.cn/h.j3KxF8S?tk=wbmbTxAyeXn CZ057 「这是我的闲鱼号，快来看看吧～」\n点击链接直接打开',
+  // 优惠券：小样盒满 min 元减 off 元，买家先点「领优惠券」才算。不想要了把这行删掉
+  coupon: { min: 99, off: 5 },
 };
 
 const PERFUMES = [

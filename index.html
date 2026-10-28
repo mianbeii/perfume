@@ -53,6 +53,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .hero-in .tip{font-size:13px;color:var(--on-bg-soft);line-height:1.9;letter-spacing:.06em;margin:0 auto;max-width:420px}
 .xy{margin:14px auto 0;display:inline-block;font:inherit;font-size:13px;letter-spacing:.12em;color:var(--bg2);background:rgba(255,255,255,.5);border:1px solid var(--gold);border-radius:999px;padding:8px 22px;cursor:pointer}
 .xy:active{background:var(--bg2);color:var(--cream)}
+.btns{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:14px}
+.btns .xy{margin:0}
+.xy.cp{background:linear-gradient(90deg,#9d7d4f,#b39463);color:#fff;border-color:transparent}
+.xy.cp.got{background:rgba(255,255,255,.5);color:var(--bg2);border:1px dashed var(--gold)}
 
 /* —— 筛选 —— */
 .bar{position:sticky;top:0;z-index:20;background:rgba(251,247,239,.88);backdrop-filter:saturate(1.2) blur(12px);-webkit-backdrop-filter:saturate(1.2) blur(12px);border-bottom:1px solid var(--line)}
@@ -159,6 +163,10 @@ footer .orn{margin-bottom:12px}
 .bi .t div{font-size:12px;color:var(--soft);margin-top:2px}
 .bi .p{font-family:var(--serif);font-size:16px}
 .bi .rm{color:var(--soft);font-size:18px;width:28px}
+.cp-row{display:flex;justify-content:space-between;align-items:center;margin:14px 24px 0;padding:10px 14px;border:1px dashed var(--gold);border-radius:12px;font-size:13px;color:var(--bg2);background:rgba(255,255,255,.5)}
+.cp-row b{font-family:var(--serif);font-weight:500;font-size:16px}
+.cp-row button{background:var(--bg2);color:#fff;border-radius:999px;padding:5px 14px;font-size:12.5px}
+.cp-row.dim{color:var(--soft)}
 .total{display:flex;justify-content:space-between;align-items:baseline;margin:16px 24px 0;font-size:13px;color:var(--soft)}
 .total b{font-family:var(--serif);font-size:24px;color:var(--ink);font-weight:500}
 .picks{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:0 24px}
@@ -197,7 +205,7 @@ footer .orn{margin-bottom:12px}
 </section>
 <div class="hero-in">
   <div class="tip" id="shopTip"></div>
-  <button class="xy" id="xyBtn" type="button">复制闲鱼链接 · 去我的小店</button>
+  <div class="btns"><button class="xy" id="xyBtn" type="button">复制闲鱼链接 · 去我的小店</button><button class="xy cp" id="cpBtn" type="button" hidden></button></div>
 </div>
 
 <div class="bar"><div class="bar-in">
@@ -253,6 +261,23 @@ $('#xyBtn').onclick = () => SHOP.xianyu
   ? copy(SHOP.xianyu, '闲鱼链接已复制 ✓<br>打开闲鱼 App，会弹出来带你到我的小店', 3200)
   : toast('闲鱼链接还没填好，先在闲鱼搜我吧');
 document.title = SHOP.name + SHOP.sub;
+
+// 优惠券：满 min 减 off。领了记在这台手机上，小样盒合计和复制清单自动减
+const CP = SHOP.coupon;
+let cpGot = localStorage.getItem('decant-coupon') === '1';
+const cpName = () => `满${CP.min}减${CP.off}`;
+const cpOff = () => CP && cpGot && bagTotal() >= CP.min ? CP.off : 0;
+function drawCp() {
+  const b = $('#cpBtn'); b.hidden = !CP; if (!CP) return;
+  b.textContent = cpGot ? `已领优惠券 · ${cpName()}` : `领优惠券 · ${cpName()}`;
+  b.classList.toggle('got', cpGot);
+}
+function claimCp() {
+  if (cpGot) { toast(`优惠券已经领过啦<br>小样盒满 ¥${CP.min} 自动减 ¥${CP.off}`, 2400); return; }
+  cpGot = true; localStorage.setItem('decant-coupon', '1'); drawCp(); renderBag();
+  toast(`领到一张${cpName()}的优惠券<br>小样盒满 ¥${CP.min} 自动减 ¥${CP.off}`, 2600);
+}
+$('#cpBtn').onclick = claimCp;
 
 // 香调（小圆图用手绘水彩）
 $('#fams').innerHTML = `<button class="fam on" data-f=""><i class="all">全</i>全部</button>` +
@@ -337,7 +362,7 @@ function line(x, i) { const p = byId(x.id), s = p.sizes[x.s]; return `${i + 1}. 
 function renderBag() {
   bag = bag.filter(x => byId(x.id) && byId(x.id).sizes[x.s] && (!x.pick || typeof x.pick[0] === 'object'));
   $('#bag').classList.toggle('show', bag.length > 0);
-  $('#bagN').innerHTML = `小样盒 ${bag.length} 件<small>¥${bagTotal()}</small>`;
+  $('#bagN').innerHTML = `小样盒 ${bag.length} 件<small>¥${bagTotal() - cpOff()}</small>`;
 }
 function openBag() {
   if (!bag.length) { close(); return; }
@@ -346,7 +371,10 @@ function openBag() {
     <div class="d-top"><div><div class="brand">MY SAMPLE BOX</div><div class="name">我的小样盒</div></div></div>
     <div class="bag-list">${bag.map((x, i) => { const p = byId(x.id), s = p.sizes[x.s]; return `
       <div class="bi">${pic(p)}<div class="t"><b>${p.name}</b><div>${p.brand} · ${p.id} · ${s.ml}ml${free(s)}</div>${x.pick ? `<div>${x.pick.map(k => `${k.n} ${k.ml}ml`).join('、')}</div>` : ''}</div><span class="p">¥${s.price}</span><button class="rm" data-rm="${i}">×</button></div>`; }).join('')}</div>
-    <div class="total"><span>共 ${bag.length} 件</span><span>合计 <b>¥${bagTotal()}</b></span></div>
+    ${!CP ? '' : !cpGot ? `<div class="cp-row"><span>有一张 ${cpName()} 的优惠券</span><button data-cp>领取</button></div>`
+      : cpOff() ? `<div class="cp-row"><span>优惠券 · ${cpName()}</span><b>−¥${CP.off}</b></div>`
+      : `<div class="cp-row dim"><span>优惠券 · ${cpName()}</span><span>再挑 ¥${CP.min - bagTotal()} 就能用</span></div>`}
+    <div class="total"><span>共 ${bag.length} 件${cpOff() ? ` · 原价 ¥${bagTotal()}` : ''}</span><span>合计 <b>¥${bagTotal() - cpOff()}</b></span></div>
     <div class="acts"><button class="btn dark" data-copyall>复制清单</button></div>
     <div class="hint">复制后回到闲鱼，粘贴发给我<br>我按清单改好价格，你再拍下就好</div>`;
   open();
@@ -388,7 +416,8 @@ $('#sheet').onclick = e => {
     const s = cur.sizes[curSize], one = pk => `${cur.id} ${cur.brand} ${cur.name}${picked({ pick: pk }, s)} · ${s.ml}ml ¥${s.price}${free(s)}`;
     copy(cur.pick && !isMix() ? `你好～我想要：\n${curPick.map(x => one([x])).join('\n')}\n合计 ¥${s.price * curPick.length}` : `你好～我想要：${one(curPick)}`); }
   else if (t.dataset.rm) { bag.splice(+t.dataset.rm, 1); saveBag(); render(); openBag(); }
-  else if (t.hasAttribute('data-copyall')) copy(`你好～我想要这些：\n${bag.map(line).join('\n')}\n合计 ¥${bagTotal()}`);
+  else if (t.hasAttribute('data-cp')) { claimCp(); openBag(); }
+  else if (t.hasAttribute('data-copyall')) copy(`你好～我想要这些：\n${bag.map(line).join('\n')}\n` + (cpOff() ? `小计 ¥${bagTotal()}\n优惠券 ${cpName()} −¥${CP.off}\n合计 ¥${bagTotal() - cpOff()}` : `合计 ¥${bagTotal()}`));
 };
 
 // 帝门特这类任选系列：单买（每种一支）或凑一瓶（配比，凑满这个规格的毫升数）
@@ -458,6 +487,7 @@ function toast(h, ms = 1800) { const el = $('#toast'); el.innerHTML = h; el.clas
   setTimeout(() => nudge.classList.add('gone'), 6000);
 })();
 
+drawCp();
 render();
 </script>
 </body>

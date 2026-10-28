@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>一朵棉被的香水小店 · 新版小样</title>
+<style>
+@font-face{font-family:'WK';src:url(fonts/wenkai.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Corm';src:url(../fonts/corm.woff2) format('woff2');font-display:swap}
+:root{
+  --ivory:#fbf7ef; --cream:#f4ecdd; --gold:#b39463; --gold-d:#8a6d43;
+  --ink:#5a4630; --soft:#9c8a72; --line:rgba(179,148,99,.35);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--ivory);color:var(--ink);font-family:'Corm','WK',serif}
+body{padding-bottom:110px}
+
+/* 头部 */
+.top{text-align:center;padding:26px 0 0;position:relative;z-index:3}
+.top h1{margin:0;font-weight:400;font-size:30px;letter-spacing:.42em;padding-left:.42em;color:var(--gold-d)}
+.top .sub{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:8px;font-size:13px;letter-spacing:.5em;color:var(--soft)}
+.top .sub::before,.top .sub::after{content:'';width:42px;height:1px;background:var(--line)}
+
+/* 头图：丝绸底＋会晃的瓶子 */
+.hero{position:relative;height:min(118vw,560px);margin-top:-70px;overflow:hidden;touch-action:pan-y}
+.silk{position:absolute;inset:-20px;background:url(img/silk.jpg) center 60%/cover no-repeat;will-change:transform}
+.hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,var(--ivory))}
+.stage{position:absolute;left:50%;bottom:9%;width:min(52vw,250px);transform:translateX(-50%);z-index:2;mix-blend-mode:multiply}
+.shadow{position:absolute;left:12%;right:12%;bottom:-6px;height:22px;border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(120,90,40,.28),transparent 70%);will-change:transform}
+.bottle{display:block;width:100%;transform-origin:50% 96%;will-change:transform;
+  cursor:grab;user-select:none;-webkit-user-drag:none;touch-action:pan-y}
+.bottle.dragging{cursor:grabbing}
+.hint{position:absolute;left:0;right:0;bottom:2%;text-align:center;font-size:12px;letter-spacing:.3em;color:var(--soft);
+  z-index:3;transition:opacity .8s}
+.hint.gone{opacity:0}
+
+.intro{text-align:center;font-size:13px;color:var(--soft);letter-spacing:.08em;line-height:1.9;margin:4px 30px 0}
+.orn{display:flex;align-items:center;gap:10px;margin:22px 34px}
+.orn::before,.orn::after{content:'';flex:1;height:1px;background:var(--line)}
+.orn i{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);opacity:.7}
+
+/* 香调 */
+.fams{display:flex;gap:6px;overflow-x:auto;padding:0 18px 4px;scrollbar-width:none;justify-content:safe center}
+.fams::-webkit-scrollbar{display:none}
+.fam{flex:0 0 auto;width:62px;text-align:center;background:none;border:0;padding:0;font:inherit;color:var(--ink);cursor:pointer}
+.fam .ic{width:54px;height:54px;margin:0 auto;border-radius:50%;background:center/cover;mix-blend-mode:multiply;
+  border:1px solid transparent;transition:border-color .3s}
+.fam .ic.all{display:grid;place-items:center;font-size:14px;color:var(--gold-d);background:var(--cream);mix-blend-mode:normal}
+.fam span{display:block;font-size:13px;margin-top:4px;letter-spacing:.1em}
+.fam.on .ic{border-color:var(--gold)}
+.fam.on span{color:var(--gold-d)}
+
+/* 卡片 */
+.list{display:grid;grid-template-columns:1fr;gap:14px;padding:22px 16px 0;max-width:1100px;margin:0 auto}
+@media (min-width:760px){.list{grid-template-columns:1fr 1fr}}
+@media (min-width:1080px){.list{grid-template-columns:1fr 1fr 1fr}}
+.card{display:flex;gap:12px;background:rgba(255,255,255,.62);border:1px solid rgba(179,148,99,.18);border-radius:18px;
+  padding:12px;box-shadow:0 6px 24px rgba(150,120,70,.07)}
+.card .pic{flex:0 0 34%;aspect-ratio:3/4;border-radius:12px;background:center/cover var(--cream);mix-blend-mode:multiply}
+.card .txt{flex:1;min-width:0;display:flex;flex-direction:column}
+.card .brand{font-size:11px;letter-spacing:.12em;color:var(--soft)}
+.card h3{margin:2px 0 0;font-weight:400;font-size:18px;letter-spacing:.06em}
+.card .en{font-size:12px;color:var(--soft);font-style:italic}
+.card .say{font-size:12.5px;line-height:1.7;color:#7d6a52;margin:6px 0 8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sizes{display:flex;gap:6px;margin-top:auto;flex-wrap:wrap}
+.sz{flex:1;min-width:52px;border:1px solid var(--line);border-radius:10px;text-align:center;padding:5px 2px 4px;font-size:12px;color:var(--soft)}
+.sz b{display:block;font-weight:400;font-size:15px;color:var(--ink)}
+.sz em{display:block;font-style:normal;font-size:10px;color:var(--gold)}
+
+/* 小样盒浮条 */
+.box{position:fixed;left:50%;bottom:34px;transform:translateX(-50%);width:min(86vw,380px);height:52px;border-radius:26px;
+  background:linear-gradient(90deg,#efe3cc,#f8f1e4 55%,#ecdfc6);border:1px solid rgba(179,148,99,.35);
+  box-shadow:0 8px 26px rgba(140,110,60,.18);display:flex;align-items:center;justify-content:center;gap:10px;
+  font-size:16px;letter-spacing:.4em;color:var(--gold-d);z-index:9}
+.box small{font-size:11px;letter-spacing:.1em;color:var(--soft)}
+.proto{text-align:center;font-size:11px;color:#c2b39c;margin:26px 0 0;letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>一朵棉被</h1>
+  <div class="sub">的香水小店</div>
+</header>
+
+<section class="hero" id="hero">
+  <div class="silk" id="silk"></div>
+  <div class="stage">
+    <div class="shadow" id="shadow"></div>
+    <img class="bottle" id="bottle" src="img/bottle.jpg" alt="Mianbei Parfum 香水瓶" draggable="false">
+  </div>
+  <div class="hint" id="hint">‹ 拨 一 下 瓶 子 ›</div>
+</section>
+
+<p class="intro" id="intro"></p>
+<div class="orn"><i></i></div>
+
+<nav class="fams" id="fams"></nav>
+<main class="list" id="list"></main>
+
+<p class="proto">新版小样 · 只看样子，小样盒还不能用</p>
+<div class="box">小样盒 <small>0 支</small></div>
+
+<script src="../data.js"></script>
+<script>
+// ── 瓶子晃动：弹簧 ──
+(() => {
+  const hero = document.getElementById('hero'), bottle = document.getElementById('bottle'),
+        silk = document.getElementById('silk'), shadow = document.getElementById('shadow'),
+        hint = document.getElementById('hint');
+  let ang = 0, va = 0, ta = 0;   // 角度
+  let x = 0, vx = 0, tx = 0;     // 平移
+  const K = 0.055, D = 0.86;     // 弹力、阻尼：松手后会晃两下再停
+  const clamp = (v, a) => Math.max(-a, Math.min(a, v));
+
+  (function loop() {
+    va = (va + (ta - ang) * K) * D; ang += va;
+    vx = (vx + (tx - x) * K) * D;   x += vx;
+    bottle.style.transform = `translateX(${x.toFixed(2)}px) rotate(${ang.toFixed(3)}deg)`;
+    shadow.style.transform = `translateX(${(x * .6).toFixed(2)}px) scaleX(${(1 + Math.abs(ang) * .015).toFixed(3)})`;
+    silk.style.transform = `translateX(${(-x * .35).toFixed(2)}px)`;
+    requestAnimationFrame(loop);
+  })();
+
+  const hideHint = () => hint.classList.add('gone');
+
+  // 电脑：鼠标在头图上移动，瓶子朝鼠标那边偏
+  hero.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse' || dragging) return;
+    const r = hero.getBoundingClientRect();
+    const rel = clamp((e.clientX - r.left - r.width / 2) / (r.width / 2), 1);
+    ta = rel * 5; tx = rel * 14;
+  });
+  hero.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && !dragging) { ta = 0; tx = 0; } });
+
+  // 手机（电脑也行）：按住瓶子左右拖，松手弹回去
+  let dragging = false, sx = 0;
+  bottle.addEventListener('pointerdown', e => {
+    dragging = true; sx = e.clientX; bottle.classList.add('dragging');
+    bottle.setPointerCapture(e.pointerId); hideHint();
+  });
+  bottle.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - sx;
+    ta = clamp(dx / 7, 14); tx = clamp(dx * .35, 34);
+  });
+  const end = () => { if (!dragging) return; dragging = false; bottle.classList.remove('dragging'); ta = 0; tx = 0; };
+  bottle.addEventListener('pointerup', end);
+  bottle.addEventListener('pointercancel', end);
+
+  // 一进来先自己轻轻晃一下，告诉人它能动
+  setTimeout(() => { va = 2.2; vx = 3; }, 900);
+  setTimeout(hideHint, 6000);
+})();
+
+// ── 香调和卡片 ──
+const FAMS = [['all', '全部'], ['floral', '花香'], ['citrus', '柑橘'], ['woody', '木质'], ['sweet', '甜香'], ['fresh', '清新'], ['amber', '琥珀']];
+let fam = 'all';
+document.getElementById('intro').textContent = SHOP.tip;
+
+function renderFams() {
+  document.getElementById('fams').innerHTML = FAMS.map(([k, n]) =>
+    `<button class="fam${k === fam ? ' on' : ''}" data-k="${k}">
+       <div class="ic${k === 'all' ? ' all' : ''}" ${k === 'all' ? '' : `style="background-image:url(../img/${k}.jpg)"`}>${k === 'all' ? '全' : ''}</div>
+       <span>${n}</span></button>`).join('');
+}
+function renderList() {
+  const list = PERFUMES.filter(p => fam === 'all' || p.family === fam);
+  document.getElementById('list').innerHTML = list.map(p => `
+    <article class="card">
+      <div class="pic" style="background-image:url(../img/${p.pic || p.family + '.jpg'})"></div>
+      <div class="txt">
+        <div class="brand">${p.brand}</div>
+        <h3>${p.name}</h3>
+        <div class="en">${p.en || ''}</div>
+        <div class="say">${p.say || ''}</div>
+        <div class="sizes">${p.sizes.map(s => `<div class="sz">${s.ml}ml<b>¥${s.price}</b>${s.free ? '<em>包邮</em>' : ''}</div>`).join('')}</div>
+      </div>
+    </article>`).join('');
+}
+document.getElementById('fams').addEventListener('click', e => {
+  const b = e.target.closest('.fam'); if (!b) return;
+  fam = b.dataset.k; renderFams(); renderList();
+});
+renderFams(); renderList();
+</script>
+</body>
+</html>
